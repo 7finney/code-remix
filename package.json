@@ -94,6 +94,11 @@
 				"command": "rmxPlugins.languageSelector",
 				"title": "Language selector",
 				"category": "Remix IDE"
+			},
+			{
+				"command": "rmxPlugins.deploy",
+				"title": "Deploy contracts through Ethcode",
+				"category": "Remix IDE"
 			}
 		],
 		"keybindings": [

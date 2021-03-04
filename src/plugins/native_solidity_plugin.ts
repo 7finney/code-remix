@@ -2,7 +2,7 @@ import { CommandPlugin } from "@remixproject/engine-vscode";
 import { window, OutputChannel, workspace } from "vscode";
 import { fork, ChildProcess } from "child_process";
 import * as path from "path";
-import { ISources, CompilerInput, CompilerInputOptions } from "../types";
+import { ISources, CompilerInput, CompilerInputOptions, ICompilationResult } from "../types";
 
 const profile = {
   name: 'solidity',
@@ -15,14 +15,6 @@ const profile = {
   version: '0.0.1',
   methods: ['getCompilationResult', 'compile', 'compileWithParameters', 'setCompilerConfig']
 };
-
-interface ICompilationResult {
-  source: {
-    target: string;
-    sources: ISources;
-  };
-  data: any;
-}
 
 export default class NativeSolcPlugin extends CommandPlugin {
   private version: string = 'latest';

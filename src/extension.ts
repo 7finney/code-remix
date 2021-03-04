@@ -1,5 +1,5 @@
 "use strict";
-import { window, commands, workspace, InputBoxOptions, ExtensionContext, QuickPickItem } from "vscode";
+import { window, commands, extensions, workspace, InputBoxOptions, ExtensionContext, QuickPickItem } from "vscode";
 import { PluginManager, Engine } from '@remixproject/engine';
 import { ThemeUrls} from '@remixproject/plugin-api'
 import { VscodeAppManager, WebviewPlugin, ThemePlugin, FileManagerPlugin, EditorPlugin, EditorOptions, transformCmd, ThemeOptions, ContentImportPlugin } from '@remixproject/engine-vscode';
@@ -8,7 +8,7 @@ import { RmxPluginsProvider } from "./rmxPlugins";
 import NativeSolcPlugin from "./plugins/native_solidity_plugin";
 import { pluginActivate, pluginDeactivate, pluginUninstall } from './optionInputs';
 import { ToViewColumn, GetPluginData } from "./utils";
-import { PluginInfo, CompilerInputOptions } from "./types";
+import { PluginInfo, CompilerInputOptions, ICompilationResult } from "./types";
 import { Profile } from '@remixproject/plugin-utils';
 
 class VscodeManager extends VscodeAppManager {
@@ -205,4 +205,18 @@ export async function activate(context: ExtensionContext) {
       console.log(error);      
     }
   });
+  // extension connector
+  commands.registerCommand('rmxPlugins.deploy', async () => {
+    console.log('should deploy');
+    const ethcode = extensions.getExtension('ethential.ethcode');
+    await ethcode.activate();
+    await manager.activatePlugin(['solidity']);
+    const compilationResult: ICompilationResult = solpl.getCompilationResult();
+    console.log(compilationResult);
+    
+    if(ethcode.isActive) {
+      const ethcodeApi = ethcode.exports;
+      ethcodeApi.loadCompiled(compilationResult);
+    }
+  })
 }
