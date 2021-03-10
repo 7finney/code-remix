@@ -19,6 +19,19 @@ interface Notifications {
   udapp?: string[] | null;
   network?: string[] | null;
 }
+/**
+ * Compilation result interface
+ */
+export interface ICompilationResult {
+  source: {
+    target: string;
+    sources: ISources;
+  };
+  data: any;
+}
+/**
+ * Compiler input interface
+ */
 export interface CompilerInput {
     // Required: Source code language. Currently supported are "Solidity" and "Yul".
   language: Language,
