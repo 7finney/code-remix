@@ -1,3 +1,5 @@
+# Repository moved
+New repository - [github.com/ethereum/remix-vscode](https://github.com/ethereum/remix-vscode)
 # Remix Plugins manager
 This project aims to provide a similar interface like vscode extension manager but for Remix plugins.
 
